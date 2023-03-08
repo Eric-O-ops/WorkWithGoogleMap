@@ -1,0 +1,121 @@
+{
+  "project_info": {
+    "project_number": "63148539535",
+    "project_id": "geeklocation-1674735660392",
+    "storage_bucket": "geeklocation-1674735660392.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:63148539535:android:0eb59122d99ead23e33afa",
+        "android_client_info": {
+          "package_name": "com.geektech.geeklocation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "63148539535-16qgbq9g2fj7ihvearkkguh8vaslc5fe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.geektech.geeklocation",
+            "certificate_hash": "dd1e88577156bedfec4ef72801e83c5ef814e03b"
+          }
+        },
+        {
+          "client_id": "63148539535-p7c8ma56tegamohq9omq31fae05stbi7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL3Z6GFx9n1mYrmYK4_LcxcUofzGo3mbk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "63148539535-46agftjasrisu66o7t4jhhvgfucr8aue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:63148539535:android:0fdcd02d55467b3de33afa",
+        "android_client_info": {
+          "package_name": "com.geektech.signinwithgoogle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "63148539535-arq8dhsdhk9lml6lb4j6dbljrht6777u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.geektech.signinwithgoogle",
+            "certificate_hash": "dd1e88577156bedfec4ef72801e83c5ef814e03b"
+          }
+        },
+        {
+          "client_id": "63148539535-p7c8ma56tegamohq9omq31fae05stbi7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL3Z6GFx9n1mYrmYK4_LcxcUofzGo3mbk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "63148539535-46agftjasrisu66o7t4jhhvgfucr8aue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:63148539535:android:0840ee8402932898e33afa",
+        "android_client_info": {
+          "package_name": "com.geektech.workwithgooglemap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "63148539535-ih60h9paa35tjuq3a6ufh6ia8pie05je.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.geektech.workwithgooglemap",
+            "certificate_hash": "dd1e88577156bedfec4ef72801e83c5ef814e03b"
+          }
+        },
+        {
+          "client_id": "63148539535-p7c8ma56tegamohq9omq31fae05stbi7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL3Z6GFx9n1mYrmYK4_LcxcUofzGo3mbk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "63148539535-46agftjasrisu66o7t4jhhvgfucr8aue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
