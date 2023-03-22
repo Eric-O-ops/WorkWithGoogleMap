@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.geektech.workwithgooglemap.data.remote.repositories.UserTestRepository
+import com.geektech.workwithgooglemap.data.remote.repositories.UserRepository
 import com.geektech.workwithgooglemap.fragments.Users
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
-    private val repository: UserTestRepository,
+    private val repository: UserRepository,
     private val firestore: FirebaseFirestore
 ) : ViewModel() {
 
