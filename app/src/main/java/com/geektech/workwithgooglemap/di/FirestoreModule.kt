@@ -1,6 +1,6 @@
 package com.geektech.workwithgooglemap.di
 
-import com.geektech.workwithgooglemap.data.remote.repositories.UserTestRepository
+import com.geektech.workwithgooglemap.data.remote.repositories.UserRepository
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.Module
@@ -16,5 +16,5 @@ object FirestoreModule {
     fun provideFirestore() = Firebase.firestore
 
     @Provides
-    fun provideUserTestRep() = UserTestRepository(provideFirestore())
+    fun provideUserTestRep() = UserRepository(provideFirestore())
 }
