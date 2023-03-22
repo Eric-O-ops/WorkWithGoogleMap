@@ -1,4 +1,4 @@
-package com.geektech.workwithgooglemap.data.remote.repositories
+package com.geektech.workwithgooglemap.fragments
 
 import android.content.Context
 import android.graphics.Bitmap
