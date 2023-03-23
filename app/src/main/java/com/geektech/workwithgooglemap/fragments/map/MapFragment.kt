@@ -3,13 +3,15 @@ package com.geektech.workwithgooglemap.fragments.map
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.geektech.workwithgooglemap.R
 import com.geektech.workwithgooglemap.fragments.ConvertToBitmap
-import com.geektech.workwithgooglemap.fragments.MarkerListener
+import com.geektech.workwithgooglemap.fragments.MarkerTapListener
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -41,7 +43,7 @@ class MapFragment : Fragment(R.layout.fragment_test_map), OnMapReadyCallback {
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        uiScope.launch(Dispatchers.IO){
+        uiScope.launch(Dispatchers.IO) {
             initialization()
 
         }
@@ -49,29 +51,61 @@ class MapFragment : Fragment(R.layout.fragment_test_map), OnMapReadyCallback {
 
     private fun initialization() {
 
-            fusedLocClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-            locRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 500)
-                .setWaitForAccurateLocation(false)
-                .setMinUpdateIntervalMillis(2000)
-                .setMaxUpdateDelayMillis(100)
-                .build()
+        locRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 500)
+            .setWaitForAccurateLocation(false)
+            .setMinUpdateIntervalMillis(2000)
+            .setMaxUpdateDelayMillis(100)
+            .build()
 
-            locThisUser()
+        locThisUser()
 
+        locUpdates = MapLocUpdates(fusedLocClient, locRequest, locCallback)
+    }
 
-            locUpdates = MapLocUpdates(fusedLocClient, locRequest, locCallback)
+   private fun zoomCheckListener(userName: String, marker: Marker, zoom: Float) {
+        val markerView =
+            LayoutInflater.from(requireContext()).inflate(R.layout.marker_other_person, null)
+        val container = markerView.findViewById<LinearLayout>(R.id.container_marker)
+        val textUnderIcon = markerView.findViewById<TextView>(R.id.user_name)
+        textUnderIcon.text = userName
+        if (zoom <= 19) {
+            val covertImage = ConvertToBitmap.Base()
+            marker.setIcon(
+                covertImage.convert(
+                    requireActivity().applicationContext,
+                    R.drawable.marker_other_user
+                )
+            )
+        } else {
+            marker.setIcon(
+                BitmapDescriptorFactory
+                    .fromBitmap(
+                        ConvertToBitmap.Base()
+                            .convert(container)
+                    )
+            )
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        viewLifecycleOwner.lifecycleScope.launch {
-            MarkerListener(googleMap).markerListener()
+        uiScope.launch {
+            MarkerTapListener(googleMap).invoke()
             locOtherUsers()
+        }
+        mMap.setOnCameraMoveStartedListener {
+            val zoom = mMap.cameraPosition.zoom
+            Log.e("Zoom", "zoom: $zoom")
+            for (value in 0 until usersMarker.size) {
+                val user = usersMarker[value]
+                zoomCheckListener(user.title.toString(), user, zoom)
+            }
         }
     }
 
-    fun markerThisUser(location: Location) {
+    private fun markerThisUser(location: Location) {
         val covertImage = ConvertToBitmap.Base()
         val position = LatLng(location.latitude, location.longitude)
         if (markerThisUser == null) {
@@ -81,7 +115,7 @@ class MapFragment : Fragment(R.layout.fragment_test_map), OnMapReadyCallback {
                     .icon(
                         covertImage.convert(
                             requireActivity().applicationContext,
-                            R.drawable.markofme2
+                            R.drawable.mark_of_this_user
                         )
                     )
                     .rotation(location.bearing)
@@ -114,11 +148,17 @@ class MapFragment : Fragment(R.layout.fragment_test_map), OnMapReadyCallback {
         viewModel.user.observe(viewLifecycleOwner) {
             if (usersMarker.isEmpty()) {
                 for (value in 0 until it.size) {
-                    val position = LatLng(it[value].location.latitude, it[value].location.longitude)
+                    val user = it[value]
+                    val position = LatLng(user.location.latitude, user.location.longitude)
                     val marker = mMap.addMarker(
                         MarkerOptions()
                             .position(position)
-                            .icon(convertImage.convert(requireContext(), R.drawable.markofme)))
+                            .title(user.name)
+                            .icon(
+                                convertImage
+                                    .convert(requireContext(), R.drawable.marker_other_user)
+                            )
+                    )
                     usersMarker.add(marker!!)
                 }
             } else {
