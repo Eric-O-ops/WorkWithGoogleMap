@@ -1,4 +1,4 @@
-package com.geektech.workwithgooglemap.fragments
+package com.geektech.workwithgooglemap.data.models
 
 import com.google.firebase.firestore.GeoPoint
 
