@@ -11,7 +11,7 @@ class UserRepository @Inject constructor(
 ) {
 
     fun updateThisUserLocation(name: String, location: Location) {
-
+        
         val user = hashMapOf(
             "name" to name,
             "location" to GeoPoint(location.latitude,location.longitude)

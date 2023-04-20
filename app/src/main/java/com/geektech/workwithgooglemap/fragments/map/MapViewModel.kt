@@ -4,11 +4,14 @@ import android.location.Location
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.geektech.workwithgooglemap.data.remote.repositories.UserRepository
 import com.geektech.workwithgooglemap.data.models.Users
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,20 +23,16 @@ class MapViewModel @Inject constructor(
 
     private var _users: MutableLiveData<ArrayList<Users>> = MutableLiveData()
 
-    init {
-        viewModelScope.launch {
-            listenUpdatesUsersLocation()
-
-        }
-    }
-
+   /* init {
+        viewModelScope.launch { listenUpdatesUsersLocation() }
+    }*/
 
     fun updateThisUserLocation(name: String, location: Location) {
 
         repository.updateThisUserLocation(name, location)
     }
 
-    private fun listenUpdatesUsersLocation() {
+    suspend fun listenUpdatesUsersLocation(): Flow<ArrayList<Users>> {
         firestore.collection("UsersTest")
             .addSnapshotListener { value, e ->
                 if (e != null) {
@@ -46,6 +45,7 @@ class MapViewModel @Inject constructor(
                     if(doc.getString("name") != "marsel") {
                         allUsers.add(
                             Users(
+                                doc.getLong("id")!!.toInt(),
                                 doc.getString("name")!!,
                                 doc.getGeoPoint("location")!!
                             )
@@ -54,6 +54,7 @@ class MapViewModel @Inject constructor(
                 }
                 _users.value = allUsers
             }
+        return _users.asFlow()
     }
 
     internal var user: MutableLiveData<ArrayList<Users>>
